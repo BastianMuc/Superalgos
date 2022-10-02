@@ -226,6 +226,8 @@ exports.newBitcoinFactoryServer = function newBitcoinFactoryServer() {
         let reportsDirectory = []
         const testsPerUser = {}
         let recordsCounter = 0
+        let duplicatesCounter = 0
+        let parametersHashList = []
         /* Debug Mode provides more verbose output about each processed Rewards File on the Console */
         const debugMode = false
         try {
@@ -242,6 +244,7 @@ exports.newBitcoinFactoryServer = function newBitcoinFactoryServer() {
             /* Check if file name matches pattern Testnet*.csv for processing Test Client rewards */
             rewardsFile = ""
             recordsCounter = 0
+            duplicatesCounter = 0
             if (/^Testnet[\w\s-]*\.csv$/gi.test(reportsDirectory[f]) === false) { 
                 continue
             } else {
@@ -294,7 +297,7 @@ exports.newBitcoinFactoryServer = function newBitcoinFactoryServer() {
                     continue
                 }             
                 /* Check if file contains mandatory columns */             
-                if (!headers.includes("assignedTimestamp") || !headers.includes("testedByProfile") || !headers.includes("status")) {
+                if (!headers.includes("assignedTimestamp") || !headers.includes("testedByProfile") || !headers.includes("status") || !headers.includes("parametersHash")) {
                     console.log((new Date()).toISOString(), "[WARN] Bitcoin Factory Rewards File", reportsDirectory[f], "with unexpected syntax, discarding")
                     continue
                 }
@@ -307,13 +310,20 @@ exports.newBitcoinFactoryServer = function newBitcoinFactoryServer() {
                         uploadTimestamp = parseInt(csvToJsonResult[x].assignedTimestamp)
                     }
                     let profile = csvToJsonResult[x].testedByProfile
+                    /* Check record for Tested status and if assigned within Governance period */
                     if (csvToJsonResult[x].status === "Tested" && uploadTimestamp >= parseInt(firstTimestamp) && uploadTimestamp <= parseInt(lastTimestamp)) {
-                        if (testsPerUser[profile] !== undefined) {
-                            testsPerUser[profile] = testsPerUser[profile] + 1
+                        /* Check if record has been found in another file, based on parametersHash */
+                        if (parametersHashList.includes(csvToJsonResult[x].parametersHash)) {
+                            duplicatesCounter++
                         } else {
-                            testsPerUser[profile] = 1
+                            if (testsPerUser[profile] !== undefined) {
+                                testsPerUser[profile] = testsPerUser[profile] + 1
+                            } else {
+                                testsPerUser[profile] = 1
+                            }
+                            recordsCounter++
+                            parametersHashList.push(csvToJsonResult[x].parametersHash)
                         }
-                        recordsCounter++
                     }
                 }
                 if (debugMode === true) {
@@ -321,6 +331,9 @@ exports.newBitcoinFactoryServer = function newBitcoinFactoryServer() {
                         console.log((new Date()).toISOString(), "[INFO] Governance Rewards File", reportsDirectory[f], "does not contain any records for this period")
                     } else {
                         console.log((new Date()).toISOString(), "[INFO] Governance Rewards File", reportsDirectory[f], "contains", recordsCounter, "valid records")
+                    }
+                    if (duplicatesCounter > 0) {
+                        console.log((new Date()).toISOString(), "[INFO] Governance Rewards File", reportsDirectory[f], "contains", duplicatesCounter, "duplicate records which were discarded")
                     }
                 }
             }
