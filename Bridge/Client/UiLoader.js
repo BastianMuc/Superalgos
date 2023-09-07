@@ -9,6 +9,7 @@ exports.newBridgeUIApp = function newBridgeUIApp() {
     return thisObject
 
     function initialize(mode) {
+        /* Standard Launch from static files under UI/dist */
         if (mode !== 'dev') {
             let path = __dirname + '/../UI/dist'
             let fileServer = new SA.nodeModules.static.Server(path)
@@ -17,6 +18,13 @@ exports.newBridgeUIApp = function newBridgeUIApp() {
                     fileServer.serve(req, res)
                 }).resume()
             }).listen(global.env.BRIDGE_HTTP_INTERFACE_PORT)
+
+            if (process.argv.includes("noBrowser")) {
+                //Running Client only with no UI.
+            } else {
+                SA.nodeModules.open('http://localhost:' + global.env.BRIDGE_HTTP_INTERFACE_PORT)
+            }
+        /* Launch of dynamically generated dev version via vite */
         } else {        
             let path = __dirname + '/../UI/'
             spawnProcess('npm run dev', [], {shell: true, stdio: "inherit", cwd: path})

@@ -1,7 +1,7 @@
 <template>
     <div id="connector" align="right">
         {{ walletStatus }}  
-        <button v-on:click="connectWallet">{{ checkMetamask }}</button>
+        <button v-on:click="connectWallet" :disabled="checkMetamask === 'Install Metamask'">{{ checkMetamask }}</button>
     </div>
     <div>
         <h1>Superalgos Bridge</h1>
@@ -103,7 +103,7 @@ export default {
     },
     computed: {
         checkMetamask() {
-            if (typeof window.ethereum !== undefined && this.connected === false) {
+            if (typeof window.ethereum !== 'undefined' && this.connected === false) {
                 return 'Connect Wallet'
             } else if (this.connected === true) {
                 return 'Disconnect'

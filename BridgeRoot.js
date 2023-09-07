@@ -49,7 +49,8 @@ exports.newBridgeRoot = function newBridgeRoot() {
         util: require('util'),
         path: require('path'),
         http: require('http'),
-        static: require('node-static')
+        static: require('node-static'),
+        open: require('open')
       }
 
       const saLogsPath = SA.nodeModules.path.join(global.env.PATH_TO_LOG_FILES, 'Bridge')
