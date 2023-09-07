@@ -14,6 +14,7 @@ const log = console.log
  *   portHttpPlatform: number,
  *   portHttpNetwork: number,
  *   portHttpDesktop: number,
+ *   portHttpBridge: number,
  *   storeData: string,
  *   storeLogs: string,
  *   storeWorkspaces: string,
@@ -37,7 +38,8 @@ exports.commonProfileFunctions = function commonProfileFunctions() {
         16041,
         34248,
         33248,
-        31248
+        31248,
+        35248
     ]
 
     return thisObject
@@ -125,6 +127,9 @@ exports.commonProfileFunctions = function commonProfileFunctions() {
         }).option('portHttpNetwork', {
             description: 'An available port for the Network HTTP server to listen on',
             number: true
+        }).option('portHttpBridge', {
+            description: 'An available port for the Bridge HTTP server to listen on',
+            number: true            
         }).option('storeData', {
             description: 'A different location for data storage',
             string: true

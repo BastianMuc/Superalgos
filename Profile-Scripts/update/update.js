@@ -44,6 +44,7 @@ exports.updateCommand = function updateCommand() {
         updateAttributeIfValid('ortHttpPlatform')
         updateAttributeIfValid('portHttpNetwork')
         updateAttributeIfValid('portHttpDesktop')
+        updateAttributeIfValid('portHttpBridge')
         updateAttributeIfValid('storeData')
         updateAttributeIfValid('storeLogs')
         updateAttributeIfValid('storeWorkspaces')

@@ -44,6 +44,7 @@ exports.describeCommand = function describeCommand() {
         table.push(['Network HTTP port', logValueOrEmptyString(match.portHttpNetwork)])
         table.push(['Network WebSocket port', logValueOrEmptyString(match.portWssNetwork)])
         table.push(['Dashboard WebSocket port', logValueOrEmptyString(match.portWssDashboard)])
+        table.push(['Bridge HTTP port', logValueOrEmptyString(match.portHttpBridge)])
         table.push(['Log file storage', logValueOrEmptyString(match.storeLogs)])
         table.push(['Data file storage', logValueOrEmptyString(match.storeData)])
         table.push(['Workspaces file storage', logValueOrEmptyString(match.storeWorkspaces)])

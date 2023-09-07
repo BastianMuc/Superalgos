@@ -38,6 +38,7 @@ exports.createCommand = function createCommand() {
                 portHttpPlatform: args.portHttpPlatform,
                 portHttpNetwork: args.portHttpNetwork,
                 portHttpDesktop: args.portHttpDesktop,
+                portHttpBridge: args.portHttpBridge,
                 storeData: args.storeData,
                 storeLogs: args.storeLogs,
                 storeWorkspaces: args.storeWorkspaces,

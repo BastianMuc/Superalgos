@@ -14,6 +14,7 @@ const profileFunctions = require('./common').commonProfileFunctions()
  *   portHttpPlatform: number,
  *   portHttpNetwork: number,
  *   portHttpDesktop: number,
+ *   portHttpBridge: number,
  *   storeData: string,
  *   storeLogs: string,
  *   storeWorkspaces: string,
@@ -68,6 +69,7 @@ COMMANDS:
         ${chalk.italic.red('--portHttpPlatform')}
         ${chalk.italic.red('--portHttpDesktop')}
         ${chalk.italic.red('--portHttpNetwork')}
+        ${chalk.italic.red('--portHttpBridge')}
         ${chalk.italic.red('--storeData')}
         ${chalk.italic.red('--storeLogs')}
         ${chalk.italic.red('--storeWorkspaces')}
@@ -94,6 +96,7 @@ COMMANDS:
         ${chalk.italic.red('--portHttpPlatform')}
         ${chalk.italic.red('--portHttpDesktop')}
         ${chalk.italic.red('--portHttpNetwork')}
+        ${chalk.italic.red('--portHttpBridge')}
         ${chalk.italic.red('--storeData')}
         ${chalk.italic.red('--storeLogs')}
         ${chalk.italic.red('--storeWorkspaces')}

@@ -24,6 +24,7 @@ exports.newEnvironment = function () {
         PLATFORM_HTTP_INTERFACE_PORT: 34248,
         SOCIALTRADING_HTTP_INTERFACE_PORT: 33248,
         NETWORK_HTTP_INTERFACE_PORT: 31248,
+        BRIDGE_HTTP_INTERFACE_PORT: 35248,
         PATH_TO_DATA_STORAGE: path.join(basePath, './Platform/My-Data-Storage'),
         PATH_TO_PROJECTS: path.join(basePath, './Projects'),
         PATH_TO_PLUGINS: path.join(basePath, './Plugins'),
@@ -105,6 +106,7 @@ exports.newEnvironment = function () {
         if(profile.portHttpPlatform !== undefined) { thisObject.PLATFORM_HTTP_INTERFACE_PORT = profile.portHttpPlatform }
         if(profile.portHttpDesktop !== undefined) { thisObject.SOCIALTRADING_HTTP_INTERFACE_PORT = profile.portHttpDesktop }
         if(profile.portHttpNetwork !== undefined) { thisObject.NETWORK_HTTP_INTERFACE_PORT = profile.portHttpNetwork }
+        if(profile.portHttpBridge !== undefined) { thisObject.BRIDGE_HTTP_INTERFACE_PORT = profile.portHttpBridge }
         if(profile.storeData !== undefined) { thisObject.PATH_TO_DATA_STORAGE = profile.storeData }
         if(profile.storeLogs !== undefined) { thisObject.PATH_TO_LOG_FILES = profile.storeLogs }
         if(profile.storeWorkspaces !== undefined) { thisObject.PATH_TO_MY_WORKSPACES = profile.storeWorkspaces }
