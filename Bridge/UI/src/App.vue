@@ -1,9 +1,13 @@
 <script setup>
+import Headline from './components/Headline.vue'
 import WalletConnect from './components/WalletConnect.vue'
 </script>
 
 <template>
-<WalletConnect />
+  <div>
+    <Headline />
+    <WalletConnect />
+  </div>
 </template>
 
 <style scoped>

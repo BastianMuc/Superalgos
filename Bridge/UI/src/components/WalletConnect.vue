@@ -1,43 +1,45 @@
 <template>
-    <div id="connector" align="right">
-        {{ walletStatus }}  
-        <button v-on:click="connectWallet" :disabled="checkMetamask === 'Install Metamask'">{{ checkMetamask }}</button>
-    </div>
-    <div>
-        <h1>Superalgos Bridge</h1>
-    </div>
-    <div v-if="connected === false">
-        Connect your wallet to continue.
-    </div>
-    <div v-else-if="chains[chainId] === undefined">
-        Please connect to a supported network. This Bridge supports Ethereum and zySync Era.
-    </div>
-    <div v-else>
-        <table border="0" align="center" width="25%">
-            <tr style="font-size:0.75vw;"><td></td><td><b>Bridge From</b></td><td></td></tr>
-            <tr><td></td><td>{{ chains[chainId] }}</td><td></td></tr>
-            <tr><td></td><td><img src="../assets/arrow-down-circle.svg"></td><td></td></tr>
-            <tr style="font-size:0.75vw;"><td></td><td><b>Bridge To</b></td><td></td></tr>
-            <tr><td></td><td>{{ chains[destChain] }}</td><td></td></tr>
-            <tr><td colspan=3><p></p></td></tr>
-            <tr style="font-size:0.75vw;"><td></td><td><b>Token to be bridged</b></td><td></td></tr>
-            <tr><td></td><td><select :disabled="inProgress === true" class="form-select" id="token" v-model="selectedToken" v-on:change="getBalance(this.tokenAddress[this.selectedToken][this.chainId])">
-                <option value="SA">Superalgos (SA)</option>
-                <option value="ETH">Ethereum (ETH)</option>
-            </select></td><td></td></tr>
-            <tr><td colspan=3><p></p></td></tr>
-            <tr style="font-size:0.75vw;"><td></td><td><b>Balance: </b>{{ balance }} <a href="#" v-on:click="setMaxBalance" onclick="return false;">Max</a></td><td></td></tr>
-            <tr><td></td><td><input :disabled="inProgress === true" class="form-input" v-model="bridgeBalance" v-on:input="checkAllowance"></td><td></td></tr>
-            <tr><td colspan=3><p></p></td></tr>
-            <tr><td></td><td><b v-if="allowedBalance !== 'NA'">Allowance: {{ allowedBalance }}</b></td><td></td></tr>
-            <tr><td colspan=3><b style="color:red;">{{ errorText }}</b></td></tr>
-            <tr><td colspan=3><button :disabled="isButtonDisabled === true" v-on:click="getAction">{{ getSubmitButtonLabel }}</button></td></tr>
-        </table>
-        <p><br/></p>
+    <div class="content">
+        <div id="connector" align="right">
+            {{ walletStatus }}  
+            <button v-on:click="connectWallet" :disabled="checkMetamask === 'Install Metamask'">{{ checkMetamask }}</button>
+        </div>
+        <div>
+            <h1>Superalgos Bridge</h1>
+        </div>
+        <div v-if="connected === false">
+            Connect your wallet to continue.
+        </div>
+        <div v-else-if="chains[chainId] === undefined">
+            Please connect to a supported network. This Bridge supports Ethereum and zySync Era.
+        </div>
+        <div v-else>
+            <table border="0" align="center" width="25%">
+                <tr style="font-size:0.75vw;"><td></td><td><b>Bridge From</b></td><td></td></tr>
+                <tr><td></td><td>{{ chains[chainId] }}</td><td></td></tr>
+                <tr><td></td><td><img src="../assets/arrow-down-circle.svg"></td><td></td></tr>
+                <tr style="font-size:0.75vw;"><td></td><td><b>Bridge To</b></td><td></td></tr>
+                <tr><td></td><td>{{ chains[destChain] }}</td><td></td></tr>
+                <tr><td colspan=3><p></p></td></tr>
+                <tr style="font-size:0.75vw;"><td></td><td><b>Token to be bridged</b></td><td></td></tr>
+                <tr><td></td><td><select :disabled="inProgress === true" class="form-select" id="token" v-model="selectedToken" v-on:change="getBalance(this.tokenAddress[this.selectedToken][this.chainId])">
+                    <option value="SA">Superalgos (SA)</option>
+                    <option value="ETH">Ethereum (ETH)</option>
+                </select></td><td></td></tr>
+                <tr><td colspan=3><p></p></td></tr>
+                <tr style="font-size:0.75vw;"><td></td><td><b>Balance: </b>{{ balance }} <a href="#" v-on:click="setMaxBalance" onclick="return false;">Max</a></td><td></td></tr>
+                <tr><td></td><td><input :disabled="inProgress === true" class="form-input" v-model="bridgeBalance" v-on:input="checkAllowance"></td><td></td></tr>
+                <tr><td colspan=3><p></p></td></tr>
+                <tr><td></td><td><b v-if="allowedBalance !== 'NA'">Allowance: {{ allowedBalance }}</b></td><td></td></tr>
+                <tr><td colspan=3><b style="color:red;">{{ errorText }}</b></td></tr>
+                <tr><td colspan=3><button :disabled="isButtonDisabled === true" v-on:click="getAction">{{ getSubmitButtonLabel }}</button></td></tr>
+            </table>
+            <p><br/></p>
 
-        <div v-if="statusText !== ''" style="width: 50%; margin: auto; border:1px solid white; border-radius:10px;" >
-            <p style="font-size:0.75vw;"><b>Transaction status:</b></p>
-            <div v-html="statusText" style="font-size:0.66vw;"></div>
+            <div v-if="statusText !== ''" style="width: 50%; margin: auto; border:1px solid white; border-radius:10px;" >
+                <p style="font-size:0.75vw;"><b>Transaction status:</b></p>
+                <div v-html="statusText" style="font-size:0.66vw;"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -382,23 +384,27 @@ export default {
 }
 </script>
 <style>
+    .content {
+        position: relative;
+        margin-top: 25px;
+    }
 
-        .form-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;  
-            box-sizing: border-box;
-        }
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;  
+        box-sizing: border-box;
+    }
 
-        .form-select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
+    .form-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
 
 </style>
